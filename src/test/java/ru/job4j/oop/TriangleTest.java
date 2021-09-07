@@ -21,6 +21,6 @@ public class TriangleTest {
         Point b = new Point(2, 2);
         Point c = new Point(3, 3);
         double actual = new Triangle(a, b, c).area();
-        assertThat(actual, not(equalTo(-1)));
+        assertThat(actual, equalTo(-1.0));
     }
 }
