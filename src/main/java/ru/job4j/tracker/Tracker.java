@@ -31,14 +31,7 @@ public class Tracker {
     }
 
     public Item[] findAll() {
-        Item[] array = new Item[size];
-        int count = 0;
-        for (Item curItem : items) {
-            if (curItem != null) {
-                array[count++] = curItem;
-            }
-        }
-        return Arrays.copyOf(array, count);
+        return Arrays.copyOf(items, size);
     }
 
     public boolean replace(int id, Item item) {
