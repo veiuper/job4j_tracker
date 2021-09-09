@@ -57,6 +57,7 @@ public class Tracker {
         if (index != -1) {
             System.arraycopy(items, index + 1, items, index, size - 1 - index);
             items[size-- - 1] = null;
+            rsl = true;
         }
         return rsl;
     }
