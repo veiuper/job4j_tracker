@@ -13,7 +13,7 @@ public class StartUI {
             if (select == 6) {
                 run = false;
             } else if (select == 0) {
-                System.out.println("==== Create a new Item ====");
+                System.out.println("==== Create a new item ====");
                 System.out.print("Enter name: ");
                 String name = scanner.nextLine();
                 Item item = new Item(name);
@@ -28,6 +28,19 @@ public class StartUI {
                     }
                 } else {
                     System.out.println("Хранилище не содержит заявок");
+                }
+            } else if (select == 2) {
+                System.out.println("==== Edit item ====");
+                System.out.print("Enter id: ");
+                int id = Integer.parseInt(scanner.nextLine());
+                System.out.print("Enter name: ");
+                String name = scanner.nextLine();
+                Item item = new Item(name);
+                boolean rsl = tracker.replace(id, item);
+                if (rsl) {
+                    System.out.println("Заявка успешно изменена");
+                } else {
+                    System.out.println("Не удалось изменить заявку");
                 }
             } else {
                 System.out.println("Пользователь выбрал: " + select);
