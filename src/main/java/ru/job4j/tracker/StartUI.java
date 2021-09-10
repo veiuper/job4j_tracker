@@ -52,7 +52,7 @@ public class StartUI {
                 } else {
                     System.out.println("Ошибка удаления заявки");
                 }
-            } else if (select == 4) {
+            } else if (select == 5) {
                 System.out.println("==== Find items by name ====");
                 System.out.print("Enter name: ");
                 String name = scanner.nextLine();
