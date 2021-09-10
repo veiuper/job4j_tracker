@@ -41,7 +41,6 @@ public class License {
         this.created = created;
     }
 
-    @SuppressWarnings("checkstyle:NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) {
