@@ -27,8 +27,7 @@ public class StartUI {
         int id = input.askInt("Enter id: ");
         String name = input.askStr("Enter name: ");
         Item item = new Item(name);
-        boolean rsl = tracker.replace(id, item);
-        if (rsl) {
+        if (tracker.replace(id, item)) {
             System.out.println("Заявка успешно изменена");
         } else {
             System.out.println("Не удалось изменить заявку");
@@ -38,8 +37,7 @@ public class StartUI {
     public static void deleteItem(Input input, Tracker tracker) {
         System.out.println("==== Delete item ====");
         int id = input.askInt("Enter id: ");
-        boolean rsl = tracker.delete(id);
-        if (rsl) {
+        if (tracker.delete(id)) {
             System.out.println("Заявка удалена успешно");
         } else {
             System.out.println("Ошибка удаления заявки");
