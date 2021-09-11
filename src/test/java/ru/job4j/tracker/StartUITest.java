@@ -28,7 +28,7 @@ public class StartUITest {
         String[] answer = new String[]{String.valueOf(item.getId())};
         StartUI.deleteItem(new StubInput(answer), tracker);
         Item actual = tracker.findById(item.getId());
-        assertThat(actual, nullValue());
+        assertThat(actual, is(nullValue()));
     }
 
     @Test
