@@ -25,13 +25,13 @@ public class StartUITest {
 
     @Test
     public void whenDeleteItem() {
-        String[] answer = new String[]{"0", "1", "1"};
         UserAction[] actions = new UserAction[]{
                 new DeleteAction(),
                 new ExitAction(new StubOutput())
         };
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item"));
+        String[] answer = new String[]{"0", String.valueOf(item.getId()), "1"};
         new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
         Item actual = tracker.findById(item.getId());
         assertThat(actual, is(nullValue()));
@@ -44,7 +44,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         tracker.add(item);
         String expected = "New item name";
-        String[] answer = new String[]{"0", "1", expected, "1"};
+        String[] answer = new String[]{"0", String.valueOf(item.getId()), expected, "1"};
         UserAction[] actions = new UserAction[]{
                 new EditAction(),
                 new ExitAction(new StubOutput())
