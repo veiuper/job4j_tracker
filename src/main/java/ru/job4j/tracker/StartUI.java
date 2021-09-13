@@ -20,7 +20,15 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        UserAction[] actions = new UserAction[]{new CreateAction()};
+        UserAction[] actions = new UserAction[]{
+                new CreateAction(),
+                new ShowAllAction(),
+                new EditAction(),
+                new DeleteAction(),
+                new FindItemByIdAction(),
+                new FindItemsByNameAction(),
+                new ExitAction()
+        };
         new StartUI().init(new ConsoleInput(), new Tracker(), actions);
     }
 }
