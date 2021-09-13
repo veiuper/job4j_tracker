@@ -26,7 +26,7 @@ public class StartUITest {
     @Test
     public void whenDeleteItem() {
         UserAction[] actions = new UserAction[]{
-                new DeleteAction(),
+                new DeleteAction(new StubOutput()),
                 new ExitAction(new StubOutput())
         };
         Tracker tracker = new Tracker();
@@ -46,7 +46,7 @@ public class StartUITest {
         String expected = "New item name";
         String[] answer = new String[]{"0", String.valueOf(item.getId()), expected, "1"};
         UserAction[] actions = new UserAction[]{
-                new EditAction(),
+                new EditAction(new StubOutput()),
                 new ExitAction(new StubOutput())
         };
         new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
