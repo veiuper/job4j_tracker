@@ -65,4 +65,103 @@ public class StartUITest {
                 + "0. Exit" + System.lineSeparator();
         assertThat(out.toString(), is(expected));
     }
+
+    @Test
+    public void whenShowAllActionWithoutItems() {
+        StubOutput out = new StubOutput();
+        String[] answer = new String[]{"0", "1"};
+        UserAction[] actions = new UserAction[]{
+                new ShowAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(new StubOutput()).init(new StubInput(answer), new Tracker(), actions);
+        String expected = "==== Show all items ====\r\nХранилище не содержит заявок\r\n";
+        assertThat(out.toString(), is(expected));
+    }
+
+    @Test
+    public void whenFindByNameActionWithoutItems() {
+        String name = "";
+        StubOutput out = new StubOutput();
+        StubOutput actualOut = new StubOutput();
+        String[] answer = new String[]{"0", name, "1"};
+        UserAction[] actions = new UserAction[]{
+                new FindItemsByNameAction(actualOut),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(new StubInput(answer), new Tracker(), actions);
+        String expected = "==== Find items by name ====\r\nЗаявки с именем '" + name + "' не найдены\r\n";
+        assertThat(actualOut.toString(), is(expected));
+    }
+
+    @Test
+    public void whenFindByIdActionWithoutItems() {
+        String id = "1";
+        StubOutput actualOut = new StubOutput();
+        StubOutput out = new StubOutput();
+        String[] answer = new String[]{"0", id, "1"};
+        UserAction[] actions = new UserAction[]{
+                new FindItemByIdAction(actualOut),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(new StubInput(answer), new Tracker(), actions);
+        String expected = "==== Find item by id ====\r\nЗаявка с введенным id '" + id + "' не найдена\r\n";
+        assertThat(actualOut.toString(), is(expected));
+    }
+
+    @Test
+    public void whenShowAllAction() {
+        StubOutput out = new StubOutput();
+        String[] answer = new String[]{"0", "1"};
+        UserAction[] actions = new UserAction[]{
+                new ShowAllAction(out),
+                new ExitAction(out)
+        };
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("name 1"));
+        tracker.add(new Item("name 2"));
+        new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
+        String expected = "==== Show all items ====\r\n"
+                + tracker.findById(1).toString() + "\r\n"
+                + tracker.findById(2).toString() + "\r\n";
+        assertThat(out.toString(), is(expected));
+    }
+
+    @Test
+    public void whenFindByNameAction() {
+        String name1 = "name 1";
+        String name2 = "name 2";
+        StubOutput out = new StubOutput();
+        StubOutput actualOut = new StubOutput();
+        String[] answer = new String[]{"0", name1, "1"};
+        UserAction[] actions = new UserAction[]{
+                new FindItemsByNameAction(actualOut),
+                new ExitAction(out)
+        };
+        Tracker tracker = new Tracker();
+        tracker.add(new Item(name1));
+        tracker.add(new Item(name2));
+        new StartUI(out).init(new StubInput(answer), tracker, actions);
+        String expected = "==== Find items by name ====\r\n" + tracker.findByName(name1)[0].toString() + "\r\n";
+        assertThat(actualOut.toString(), is(expected));
+    }
+
+    @Test
+    public void whenFindByIdAction() {
+        String id = "1";
+        StubOutput actualOut = new StubOutput();
+        StubOutput out = new StubOutput();
+        String[] answer = new String[]{"0", id, "1"};
+        UserAction[] actions = new UserAction[]{
+                new FindItemByIdAction(actualOut),
+                new ExitAction(out)
+        };
+        Tracker tracker = new Tracker();
+        tracker.add(new Item());
+        tracker.add(new Item());
+        new StartUI(out).init(new StubInput(answer), tracker, actions);
+        String expected = "==== Find item by id ====\r\n"
+                + tracker.findById(Integer.parseInt(id)).toString() + "\r\n";
+        assertThat(actualOut.toString(), is(expected));
+    }
 }
