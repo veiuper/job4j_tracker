@@ -75,7 +75,8 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(new StubOutput()).init(new StubInput(answer), new Tracker(), actions);
-        String expected = "==== Show all items ====\r\nХранилище не содержит заявок\r\n";
+        String expected = "==== Show all items ====" + System.lineSeparator()
+                + "Хранилище не содержит заявок" + System.lineSeparator();
         assertThat(out.toString(), is(expected));
     }
 
@@ -90,7 +91,8 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(new StubInput(answer), new Tracker(), actions);
-        String expected = "==== Find items by name ====\r\nЗаявки с именем '" + name + "' не найдены\r\n";
+        String expected = "==== Find items by name ====" + System.lineSeparator()
+                + "Заявки с именем '" + name + "' не найдены" + System.lineSeparator();
         assertThat(actualOut.toString(), is(expected));
     }
 
@@ -105,7 +107,8 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(new StubInput(answer), new Tracker(), actions);
-        String expected = "==== Find item by id ====\r\nЗаявка с введенным id '" + id + "' не найдена\r\n";
+        String expected = "==== Find item by id ====" + System.lineSeparator()
+                + "Заявка с введенным id '" + id + "' не найдена" + System.lineSeparator();
         assertThat(actualOut.toString(), is(expected));
     }
 
@@ -121,9 +124,9 @@ public class StartUITest {
         tracker.add(new Item("name 1"));
         tracker.add(new Item("name 2"));
         new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
-        String expected = "==== Show all items ====\r\n"
-                + tracker.findById(1).toString() + "\r\n"
-                + tracker.findById(2).toString() + "\r\n";
+        String expected = "==== Show all items ====" + System.lineSeparator()
+                + tracker.findById(1).toString() + System.lineSeparator()
+                + tracker.findById(2).toString() + System.lineSeparator();
         assertThat(out.toString(), is(expected));
     }
 
@@ -142,7 +145,8 @@ public class StartUITest {
         tracker.add(new Item(name1));
         tracker.add(new Item(name2));
         new StartUI(out).init(new StubInput(answer), tracker, actions);
-        String expected = "==== Find items by name ====\r\n" + tracker.findByName(name1)[0].toString() + "\r\n";
+        String expected = "==== Find items by name ====" + System.lineSeparator()
+                + tracker.findByName(name1)[0].toString() + System.lineSeparator();
         assertThat(actualOut.toString(), is(expected));
     }
 
@@ -160,8 +164,8 @@ public class StartUITest {
         tracker.add(new Item());
         tracker.add(new Item());
         new StartUI(out).init(new StubInput(answer), tracker, actions);
-        String expected = "==== Find item by id ====\r\n"
-                + tracker.findById(Integer.parseInt(id)).toString() + "\r\n";
+        String expected = "==== Find item by id ====" + System.lineSeparator()
+                + tracker.findById(Integer.parseInt(id)).toString() + System.lineSeparator();
         assertThat(actualOut.toString(), is(expected));
     }
 }
