@@ -25,15 +25,16 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
+        Output out = new ConsoleOutput();
         UserAction[] actions = new UserAction[]{
-                new CreateAction(new ConsoleOutput()),
-                new ShowAllAction(new ConsoleOutput()),
-                new EditAction(new ConsoleOutput()),
-                new DeleteAction(new ConsoleOutput()),
-                new FindItemByIdAction(new ConsoleOutput()),
-                new FindItemsByNameAction(new ConsoleOutput()),
-                new ExitAction(new ConsoleOutput())
+                new CreateAction(out),
+                new ShowAllAction(out),
+                new EditAction(out),
+                new DeleteAction(out),
+                new FindItemByIdAction(out),
+                new FindItemsByNameAction(out),
+                new ExitAction(out)
         };
-        new StartUI(new ConsoleOutput()).init(new ConsoleInput(), new Tracker(), actions);
+        new StartUI(out).init(new ConsoleInput(), new Tracker(), actions);
     }
 }
