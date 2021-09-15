@@ -13,11 +13,12 @@ public class StartUITest {
         String name = "Item name";
         String[] answer = new String[]{"0", name, "1"};
         Tracker tracker = new Tracker();
+        Output out = new StubOutput();
         UserAction[] actions = new UserAction[]{
-                new CreateAction(new StubOutput()),
-                new ExitAction(new StubOutput())
+                new CreateAction(out),
+                new ExitAction(out)
         };
-        new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
+        new StartUI(out).init(new StubInput(answer), tracker, actions);
         Item actual = tracker.findAll()[0];
         Item expected = new Item(name);
         assertThat(actual.getName(), is(expected.getName()));
@@ -25,14 +26,15 @@ public class StartUITest {
 
     @Test
     public void whenDeleteItem() {
+        Output out = new StubOutput();
         UserAction[] actions = new UserAction[]{
-                new DeleteAction(new StubOutput()),
-                new ExitAction(new StubOutput())
+                new DeleteAction(out),
+                new ExitAction(out)
         };
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item"));
         String[] answer = new String[]{"0", String.valueOf(item.getId()), "1"};
-        new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
+        new StartUI(out).init(new StubInput(answer), tracker, actions);
         Item actual = tracker.findById(item.getId());
         assertThat(actual, is(nullValue()));
     }
@@ -45,11 +47,12 @@ public class StartUITest {
         tracker.add(item);
         String expected = "New item name";
         String[] answer = new String[]{"0", String.valueOf(item.getId()), expected, "1"};
+        Output out = new StubOutput();
         UserAction[] actions = new UserAction[]{
-                new EditAction(new StubOutput()),
-                new ExitAction(new StubOutput())
+                new EditAction(out),
+                new ExitAction(out)
         };
-        new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
+        new StartUI(out).init(new StubInput(answer), tracker, actions);
         Item actual = tracker.findById(item.getId());
         assertThat(actual.getName(), is(expected));
     }
@@ -59,7 +62,7 @@ public class StartUITest {
         Output out = new StubOutput();
         Input input = new StubInput(new String[]{"0"});
         Tracker tracker = new Tracker();
-        UserAction[] actions = new UserAction[]{new ExitAction(new StubOutput())};
+        UserAction[] actions = new UserAction[]{new ExitAction(out)};
         new StartUI(out).init(input, tracker, actions);
         String ls = System.lineSeparator();
         String expected = "Menu:" + ls
@@ -75,10 +78,16 @@ public class StartUITest {
                 new ShowAllAction(out),
                 new ExitAction(out)
         };
-        new StartUI(new StubOutput()).init(new StubInput(answer), new Tracker(), actions);
+        new StartUI(out).init(new StubInput(answer), new Tracker(), actions);
         String ls = System.lineSeparator();
-        String expected = "==== Show all items ====" + ls
-                + "Хранилище не содержит заявок" + ls;
+        String expected = "Menu:" + ls
+                + "0. Show all Items" + ls
+                + "1. Exit" + ls
+                + "==== Show all items ====" + ls
+                + "Хранилище не содержит заявок" + ls
+                + "Menu:" + ls
+                + "0. Show all Items" + ls
+                + "1. Exit" + ls;
         assertThat(out.toString(), is(expected));
     }
 
@@ -137,11 +146,17 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("name 1"));
         tracker.add(new Item("name 2"));
-        new StartUI(new StubOutput()).init(new StubInput(answer), tracker, actions);
+        new StartUI(out).init(new StubInput(answer), tracker, actions);
         String ls = System.lineSeparator();
-        String expected = "==== Show all items ====" + ls
+        String expected = "Menu:" + ls
+                + "0. Show all Items" + ls
+                + "1. Exit" + ls
+                + "==== Show all items ====" + ls
                 + tracker.findById(1).toString() + ls
-                + tracker.findById(2).toString() + ls;
+                + tracker.findById(2).toString() + ls
+                + "Menu:" + ls
+                + "0. Show all Items" + ls
+                + "1. Exit" + ls;
         assertThat(out.toString(), is(expected));
     }
 
@@ -193,6 +208,21 @@ public class StartUITest {
                 + "Menu:" + ls
                 + "0. Find item by id" + ls
                 + "1. Exit" + ls;
+        assertThat(out.toString(), is(expected));
+    }
+
+    @Test
+    public void whenInvalidExit() {
+        Output out = new StubOutput();
+        String[] answer = new String[]{"-1", "0"};
+        UserAction[] actions = new UserAction[]{new ExitAction(out)};
+        new StartUI(out).init(new StubInput(answer), new Tracker(), actions);
+        String ls = System.lineSeparator();
+        String expected = "Menu:" + ls
+                + "0. Exit" + ls
+                + "Wrong input, you can select: 0 .. 0" + ls
+                + "Menu:" + ls
+                + "0. Exit" + ls;
         assertThat(out.toString(), is(expected));
     }
 }
