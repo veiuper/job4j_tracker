@@ -29,7 +29,7 @@ public class Tracker {
     }
 
     public List<Item> findAll() {
-        return items;
+        return List.copyOf(items);
     }
 
     public boolean replace(int id, Item item) {
@@ -55,7 +55,7 @@ public class Tracker {
     private int indexOf(int id) {
         int rsl = -1;
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i) != null && items.get(i).getId() == id) {
+            if (items.get(i).getId() == id) {
                 rsl = i;
                 break;
             }
