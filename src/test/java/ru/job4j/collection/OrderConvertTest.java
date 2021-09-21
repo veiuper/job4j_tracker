@@ -19,4 +19,17 @@ public class OrderConvertTest {
         );
         assertThat(map.get(key), is(new Order(key, name)));
     }
+
+    @Test
+    public void whenDuplicateOrderInList() {
+        String key = "1";
+        String name = "name 1";
+        HashMap<String, Order> map = OrderConvert.process(
+                List.of(
+                        new Order(key, name),
+                        new Order(key, name)
+                )
+        );
+        assertThat(map.get(key), is(new Order(key, name)));
+    }
 }
