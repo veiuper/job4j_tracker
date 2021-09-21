@@ -3,6 +3,7 @@ package ru.job4j.collection;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class PassportOfficeTest {
@@ -20,6 +21,6 @@ public class PassportOfficeTest {
         Citizen citizen = new Citizen("2f44a", "Petr Arsentev");
         PassportOffice office = new PassportOffice();
         office.add(citizen);
-        assertThat(office.add(citizen), is(false));
+        assertFalse(office.add(citizen));
     }
 }
