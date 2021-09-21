@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class OrderConvertTest {
@@ -29,6 +30,6 @@ public class OrderConvertTest {
                 new Order(key, name)
         );
         HashMap<String, Order> map = OrderConvert.process(list);
-        assertThat(map.size() == list.size() - 1, is(true));
+        assertEquals(list.size() - 1, map.size());
     }
 }
