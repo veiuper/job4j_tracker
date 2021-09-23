@@ -2,58 +2,30 @@ package ru.job4j.collection;
 
 import org.junit.Test;
 
+import java.util.Comparator;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class StringCompareTest {
 
     @Test
-    public void whenStringsAreEqualThenZero() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Ivanov",
-                "Ivanov"
-        );
-        assertThat(rst, is(0));
-    }
-
-    @Test
-    public void whenLeftLessThanRightResultShouldBeNegative() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Ivanov",
-                "Ivanova"
-        );
-        assertThat(rst, lessThan(0));
-    }
-
-    @Test
-    public void whenLeftGreaterThanRightResultShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Petrov",
-                "Ivanova"
-        );
-        assertThat(rst, greaterThan(0));
-    }
-
-    @Test
-    public void secondCharOfLeftGreaterThanRightShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Petrov",
-                "Patrov"
-        );
-        assertThat(rst, greaterThan(0));
-    }
-
-    @Test
-    public void secondCharOfLeftLessThanRightShouldBeNegative() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Patrova",
-                "Petrov"
-        );
-        assertThat(rst, lessThan(0));
+    public void compare() {
+        Comparator<String> comparator = new StringCompare();
+        assertThat(comparator.compare("11", "11"), is(0));
+        assertThat(comparator.compare("12", "11"), greaterThan(0));
+        assertThat(comparator.compare("21", "11"), greaterThan(0));
+        assertThat(comparator.compare("11", "12"), lessThan(0));
+        assertThat(comparator.compare("11", "21"), lessThan(0));
+        assertThat(comparator.compare("11", "111"), lessThan(0));
+        assertThat(comparator.compare("12", "111"), greaterThan(0));
+        assertThat(comparator.compare("21", "111"), greaterThan(0));
+        assertThat(comparator.compare("11", "121"), lessThan(0));
+        assertThat(comparator.compare("11", "211"), lessThan(0));
+        assertThat(comparator.compare("111", "11"), greaterThan(0));
+        assertThat(comparator.compare("121", "11"), greaterThan(0));
+        assertThat(comparator.compare("211", "11"), greaterThan(0));
+        assertThat(comparator.compare("111", "12"), lessThan(0));
+        assertThat(comparator.compare("111", "21"), lessThan(0));
     }
 }
