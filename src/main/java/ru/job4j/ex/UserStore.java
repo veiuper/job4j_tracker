@@ -13,7 +13,9 @@ public class UserStore {
 
     public static boolean validate(User user) throws UserInvalidException {
         if (!user.isValid() || user.getUsername().length() < 3) {
-            throw new UserInvalidException("The user '" + user.getUsername() + "' did not pass verification");
+            throw new UserInvalidException(
+                    "The user '" + user.getUsername() + "' did not pass verification"
+            );
         }
         return true;
     }

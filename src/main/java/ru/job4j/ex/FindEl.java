@@ -10,7 +10,9 @@ public class FindEl {
             }
         }
         if (rsl == -1) {
-            throw new ElementNotFoundException("The index for the string '" + key + "' was not found");
+            throw new ElementNotFoundException(
+                    "The index for the string '" + key + "' was not found"
+            );
         }
         return rsl;
     }
@@ -18,7 +20,9 @@ public class FindEl {
     public static boolean sent(String value, String[] abuses) throws ElementAbuseException {
         for (String curString : abuses) {
             if (value.equals(curString)) {
-                throw new ElementAbuseException("The string '" + value + "' contains a forbidden key");
+                throw new ElementAbuseException(
+                        "The string '" + value + "' contains a forbidden key"
+                );
             }
         }
         return true;
