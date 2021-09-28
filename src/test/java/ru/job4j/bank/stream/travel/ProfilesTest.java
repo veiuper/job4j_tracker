@@ -18,8 +18,8 @@ public class ProfilesTest {
     @Test
     public void whenNotEmptyListProfiles() {
         List<Profile> in = List.of(
-                new Profile(new Address("city 1", "street 1", 1, 1)),
-                new Profile(new Address("city 2", "street 2", 2, 2))
+                new Profile(new Address("city 2", "street 2", 2, 2)),
+                new Profile(new Address("city 1", "street 1", 1, 1))
         );
         List<Address> matcher = List.of(
                 new Address("city 1", "street 1", 1, 1),
@@ -32,14 +32,13 @@ public class ProfilesTest {
     @Test
     public void whenNotEmptyListProfilesAndDuplicatesAddress() {
         List<Profile> in = List.of(
-                new Profile(new Address("city 1", "street 1", 1, 1)),
                 new Profile(new Address("city 2", "street 2", 2, 2)),
+                new Profile(new Address("city 1", "street 1", 1, 1)),
                 new Profile(new Address("city 1", "street 1", 1, 1))
         );
         List<Address> matcher = List.of(
                 new Address("city 1", "street 1", 1, 1),
-                new Address("city 2", "street 2", 2, 2),
-                new Address("city 1", "street 1", 1, 1)
+                new Address("city 2", "street 2", 2, 2)
         );
         List<Address> actual = new Profiles().collect(in);
         assertThat(actual, is(matcher));
