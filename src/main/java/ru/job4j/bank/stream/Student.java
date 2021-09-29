@@ -43,9 +43,12 @@ public class Student {
 
     public static Map<String, Student> listToMap(List<Student> list) {
         return list.stream()
-                .distinct()
                 .collect(
-                        Collectors.toMap(Student::getSurname, Function.identity(), (o1, o2) -> o1)
+                        Collectors.toMap(
+                                Student::getSurname,
+                                Function.identity(),
+                                (o1, o2) -> o1
+                        )
                 );
     }
 }
