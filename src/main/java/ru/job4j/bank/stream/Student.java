@@ -8,10 +8,14 @@ import java.util.stream.Collectors;
 
 public class Student {
     private final int scope;
-    private final String surname;
+    private String surname;
 
     public Student(int scope, String surname) {
         this.scope = scope;
+        this.surname = surname;
+    }
+
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
