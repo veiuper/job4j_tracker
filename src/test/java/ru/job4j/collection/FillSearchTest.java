@@ -20,7 +20,7 @@ public class FillSearchTest {
                 new Task("1", "First desc")
         );
         Set<String> actual = FillSearch.extractNumber(list);
-        Set<String> expected = new HashSet<>(Arrays.asList("1", "2"));
+        Set<String> expected = new HashSet<>(List.of("1", "2"));
         assertThat(actual, is(expected));
     }
 }

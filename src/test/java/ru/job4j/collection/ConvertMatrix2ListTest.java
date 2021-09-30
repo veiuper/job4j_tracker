@@ -3,7 +3,6 @@ package ru.job4j.collection;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -19,7 +18,7 @@ public class ConvertMatrix2ListTest {
                 {3, 4}
         };
         List<Integer> actual = converter.toList(in);
-        List<Integer> expected = Arrays.asList(1, 2, 3, 4);
+        List<Integer> expected = List.of(1, 2, 3, 4);
         assertThat(actual, is(expected));
     }
 
