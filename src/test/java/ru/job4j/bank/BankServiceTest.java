@@ -11,7 +11,7 @@ public class BankServiceTest {
     @Test
     public void whenFindByPassportNoUsersNotFinds() {
         BankService bank = new BankService();
-        Assert.assertNull(bank.findByPassport("0123 456789"));
+        Assert.assertTrue(bank.findByPassport("0123 456789").isEmpty());
     }
 
     @Test
@@ -19,7 +19,7 @@ public class BankServiceTest {
         BankService bank = new BankService();
         bank.addUser(new User("0123 456789", "username 1"));
         bank.addUser(new User("1234 567890", "username 2"));
-        Assert.assertNull(bank.findByPassport("2345 678901"));
+        Assert.assertTrue(bank.findByPassport("2345 678901").isEmpty());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class BankServiceTest {
         User expected = new User("0123 456789", "username 1");
         bank.addUser(expected);
         bank.addUser(new User("1234 567890", "username 2"));
-        User actual = bank.findByPassport(passport);
+        User actual = bank.findByPassport(passport).get();
         Assert.assertEquals(expected, actual);
     }
 
@@ -39,7 +39,7 @@ public class BankServiceTest {
         BankService bank = new BankService();
         User user = new User(passport, "username 1");
         bank.addUser(user);
-        assertThat(bank.findByPassport(passport), is(user));
+        assertThat(bank.findByPassport(passport).get(), is(user));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class BankServiceTest {
         bank.addUser(new User("1234 567890", "username 2"));
         User user = new User(passport, "username 3");
         bank.addUser(user);
-        assertThat(bank.findByPassport(passport), is(user));
+        assertThat(bank.findByPassport(passport).get(), is(user));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BankServiceTest {
         bank.addUser(new User("1234 567890", "username 2"));
         User user = new User(passport, "username 3");
         bank.addUser(user);
-        assertThat(bank.findByPassport(passport), is(user));
+        assertThat(bank.findByPassport(passport).get(), is(user));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BankServiceTest {
         String passport = "0123 456789";
         String requisite = "account 1";
         bank.addAccount(passport, new Account(requisite, 0));
-        assertNull(bank.findByRequisite(passport, requisite));
+        assertTrue(bank.findByRequisite(passport, requisite).isEmpty());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class BankServiceTest {
         bank.addUser(new User("0123 456789", "username 1"));
         bank.addUser(new User("1234 567890", "username 2"));
         bank.addAccount(passport, new Account(requisite, 0));
-        assertNull(bank.findByRequisite(passport, requisite));
+        assertTrue(bank.findByRequisite(passport, requisite).isEmpty());
     }
 
     @Test
@@ -92,13 +92,13 @@ public class BankServiceTest {
         bank.addUser(new User(passport, "username 1"));
         Account account = new Account(requisite, 0);
         bank.addAccount(passport, account);
-        assertThat(bank.findByRequisite(passport, requisite), is(account));
+        assertThat(bank.findByRequisite(passport, requisite).get(), is(account));
     }
 
     @Test
     public void whenFindByRequisiteNoUsersNotFindsUser() {
         BankService bank = new BankService();
-        Assert.assertNull(bank.findByRequisite("0123 456789", "account 1"));
+        Assert.assertTrue(bank.findByRequisite("0123 456789", "account 1").isEmpty());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class BankServiceTest {
         BankService bank = new BankService();
         bank.addUser(new User("0123 456789", "username 1"));
         bank.addUser(new User("1234 567890", "username 2"));
-        Assert.assertNull(bank.findByRequisite("2345 678901", "account 1"));
+        Assert.assertTrue(bank.findByRequisite("2345 678901", "account 1").isEmpty());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class BankServiceTest {
         BankService bank = new BankService();
         bank.addUser(new User(passport, "username 1"));
         bank.addUser(new User("1234 567890", "username 2"));
-        Assert.assertNull(bank.findByRequisite(passport, "account 1"));
+        Assert.assertTrue(bank.findByRequisite(passport, requisite).isEmpty());
     }
 
     @Test
@@ -128,7 +128,7 @@ public class BankServiceTest {
         bank.addUser(new User("1234 567890", "username 2"));
         Account expected = new Account(requisite, 0);
         bank.addAccount(passport, expected);
-        Assert.assertEquals(expected, bank.findByRequisite(passport, requisite));
+        Assert.assertEquals(expected, bank.findByRequisite(passport, requisite).get());
     }
 
     @Test
