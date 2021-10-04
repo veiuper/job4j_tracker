@@ -2,9 +2,13 @@ package ru.job4j.collection;
 
 import java.util.Comparator;
 
-public class StringCompare implements Comparator<String> {
+public class StringCompareByCharacterIndexes implements Comparator<String> {
+
     @Override
     public int compare(String o1, String o2) {
+        if (o1 == o2) {
+            return 0;
+        }
         int rsl;
         int length = Math.min(o1.length(), o2.length());
         for (int i = 0; i < length; i++) {
