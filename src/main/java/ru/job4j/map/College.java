@@ -20,16 +20,13 @@ public class College {
     }
 
     public Optional<Subject> findBySubjectName(String account, String name) {
-        var rsl = Optional.<Subject>empty();
+        Optional<Subject> rsl = Optional.empty();
         Optional<Student> optional = findByAccount(account);
-        if (optional.isPresent()) {
-            return students
-                    .get(optional.get())
-                    .stream()
-                    .filter(subject -> subject.getName().equals(name))
-                    .findFirst();
-        }
-        return rsl;
+        return optional.flatMap(student -> students
+                .get(student)
+                .stream()
+                .filter(subject -> subject.getName().equals(name))
+                .findFirst());
     }
 
     public static void main(String[] args) {
@@ -42,12 +39,8 @@ public class College {
         );
         College college = new College(students);
         Optional<Student> student = college.findByAccount("000001");
-        if (student.isPresent()) {
-            System.out.println("Найденный студент: " + student.get());
-        }
+        student.ifPresent(value -> System.out.println("Найденный студент: " + value));
         Optional<Subject> english = college.findBySubjectName("000001", "English");
-        if (english.isPresent()) {
-            System.out.println("Оценка по найденному предмету: " + english.get().getScope());
-        }
+        english.ifPresent(subject -> System.out.println("Оценка по найденному предмету: " + subject.getScope()));
     }
 }
