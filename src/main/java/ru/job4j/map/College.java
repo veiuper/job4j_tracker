@@ -41,6 +41,8 @@ public class College {
         Optional<Student> student = college.findByAccount("000001");
         student.ifPresent(value -> System.out.println("Найденный студент: " + value));
         Optional<Subject> english = college.findBySubjectName("000001", "English");
-        english.ifPresent(subject -> System.out.println("Оценка по найденному предмету: " + subject.getScope()));
+        english.ifPresent(subject -> System.out.println(
+                "Оценка по найденному предмету: " + subject.getScope())
+        );
     }
 }
